@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BinaryToDecimal</title>
+    <link rel="stylesheet" href="binary.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/uikit@3.4.0/dist/css/uikit.min.css"
+    />
+  </head>
+  <body class="uk-background-default uk-flex uk-flex-center">
+    <main
+      class="uk-container uk-align-center"
+      style="width: 30%; background-color: #fff;"
+    >
+      <header>
+      <div class="uk-flex uk-flex-between">
+        <h1>Binary To Decimal</h1>
+        <div style="padding-top: 10px;" class="moon-container">
+          <img src="./img/moon_shade.png" width="25px" style="height: 25px;" class="moon" id="moon">
+        </div>
+      </div>
+      </header>
+      <section>
+        <div>
+          <form action="" id="binaryForm">
+            <div class="uk-margin-small-bottom">
+              <p class="uk-margin-small-bottom">Enter binary number:</p>
+              <input
+                id="binaryNumber"
+                class="uk-input binary-input uk-margin-small-bottom"
+                type="text"
+                autocomplete="off"
+              />
+            </div>
+            <div class="uk-margin-small-bottom">
+              <button class="uk-button uk-button-primary" id="convertBtn">
+                Convert
+              </button>
+              <button class="uk-button uk-button-danger" id="resetBtn">
+                Reset
+              </button>
+              <!-- <div uk-spinner></div> -->
+            </div>
+          </form>
+        </div>
+        <div class="uk-margin-small-bottom">
+          <p class="decimal-value-text">Decimal number:</p>
+          <textarea
+            readonly="on"
+            class="uk-textarea decimal-value"
+            id="decimalValue"
+          ></textarea>
+        </div>
+        <div class="uk-margin-medium-bottom">
+          <p class="decimal-value-text">Entered number:</p>
+          <textarea
+            readonly="on"
+            class="uk-textarea duration-value"
+            id="durationValue"
+          ></textarea>
+        </div>
+      </section>
+      <!-- <footer> -->
+      <div>
+        <code href="/#" class="badge html">HTML</code>
+        <code href="/#" class="badge css">CSS</code>
+        <code href="/#" class="badge javascript">JavaScript</code>
+        <code href="/#" class="badge git">Git</code>
+        <code href="/#" class="badge devtools">Binary</code>
+      </div>
+      <!-- </footer> -->
+    </main>
+
+    <!--JAVASCRIPT-->
+
+    <script type="module">
+      console.time("Check");
+
+      import { binaryToDecimal } from "./binary.js";
+
+      const elementId = (name) => document.getElementById(name);
+
+      const binaryNumber = elementId("binaryNumber");
+      const decimalValue = elementId("decimalValue");
+      const convertBtn = elementId("convertBtn");
+      const durationValue = elementId("durationValue");
+      const binaryForm = elementId("binaryForm");
+      const resetBtn = elementId("resetBtn");
+      const moon = elementId("moon");
+
+      convertBtn.onclick = (e) => {
+        e.preventDefault();
+
+        binaryToDecimal(binaryNumber.value)
+          ? (decimalValue.textContent = binaryToDecimal(binaryNumber.value))
+          : notBinary(binaryNumber.value);
+      };
+
+      resetBtn.onclick = (e) => {
+        e.preventDefault();
+        decimalValue.textContent = "";
+        binaryNumber.value = "";
+      };
+
+      moon.onclick = e => {
+        document.body.classList.toggle("body-mode");
+      }
+
+      const notBinary = (error) => {
+        binaryNumber.classList.add("uk-animation-shake");
+        binaryNumber.classList.add("binary-input-error");
+        // UIkit.notification({message: 'Invalid binary!',pos: 'top-center', status: 'danger'})
+        // decimalValue.textContent = "";
+        // binaryNumber.value = "";
+
+        setTimeout(function () {
+          binaryNumber.classList.remove("uk-animation-shake");
+          binaryNumber.classList.remove("binary-input-error");
+        }, 1000);
+      };
+
+      console.timeEnd("Check");
+
+      // console.log(import.meta);
+
+      binaryNumber.oninput = () => {
+        durationValue.textContent = binaryNumber.value;
+        // console.log(
+        //   `${binaryNumber.value} converted to base ten is ${decimalValue.textContent}`
+        // );
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.4.0/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.4.0/dist/js/uikit-icons.min.js"></script>
+  </body>
+</html>
