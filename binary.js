@@ -1,4 +1,5 @@
-export const binaryToDecimal = (number) => {
+//INITIAL LOGIC
+const binary2Decimal = (number) => {
   let valueArray,
     decimal = 0,
     arrayLength;
@@ -16,6 +17,22 @@ export const binaryToDecimal = (number) => {
   }
 
   return decimal;
+
 };
+
+// WITHOUT ARRAY
+
+export const binaryToDecimal = (binary) => {
+  const regex = /^[0-1]{1,}$/g;
+
+  if(!regex.test(binary)) return false;
+
+  return parseInt(binary, 2);
+}
+
+// console.log(bin_to_dec(100001));
+
+
+
 
 // console.log(binaryToDecimal);

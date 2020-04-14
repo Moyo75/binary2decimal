@@ -11,28 +11,31 @@
     />
   </head>
   <body class="uk-background-default uk-flex uk-flex-center">
-    <main
-      class="uk-container uk-align-center"
-      style="width: 30%; background-color: #fff;"
-    >
+    <main class="uk-container uk-align-center" id="main" style="width: 30%;">
       <header>
-      <div class="uk-flex uk-flex-between">
-        <h1>Binary To Decimal</h1>
-        <div style="padding-top: 10px;" class="moon-container">
-          <img src="./img/moon_shade.png" width="25px" style="height: 25px;" class="moon" id="moon">
+        <div class="uk-flex uk-flex-between">
+          <h1 id="headerText">Bin2Dec</h1>
+          <div style="padding-top: 10px;" class="moon-container">
+            <img
+              src="./img/moon_removebg.png"
+              width="25px"
+              style="height: 25px;"
+              class="moon"
+              id="moon"
+            />
+          </div>
         </div>
-      </div>
       </header>
       <section>
         <div>
           <form action="" id="binaryForm">
             <div class="uk-margin-small-bottom">
-              <p class="uk-margin-small-bottom">Enter binary number:</p>
+              <p class="uk-margin-small-bottom" id="binaryNumberText">Enter binary number:</p>
               <input
+                maxlength="8"
                 id="binaryNumber"
                 class="uk-input binary-input uk-margin-small-bottom"
                 type="text"
-                autocomplete="off"
               />
             </div>
             <div class="uk-margin-small-bottom">
@@ -47,7 +50,7 @@
           </form>
         </div>
         <div class="uk-margin-small-bottom">
-          <p class="decimal-value-text">Decimal number:</p>
+          <p class="decimal-value-text" id="decimalValueText">Decimal number:</p>
           <textarea
             readonly="on"
             class="uk-textarea decimal-value"
@@ -55,7 +58,7 @@
           ></textarea>
         </div>
         <div class="uk-margin-medium-bottom">
-          <p class="decimal-value-text">Entered number:</p>
+          <p class="decimal-value-text" id="enteredNumberText">Entered number:</p>
           <textarea
             readonly="on"
             class="uk-textarea duration-value"
@@ -77,42 +80,28 @@
     <!--JAVASCRIPT-->
 
     <script type="module">
-      console.time("Check");
 
       import { binaryToDecimal } from "./binary.js";
 
       const elementId = (name) => document.getElementById(name);
 
+      const enteredNumberText = elementId("enteredNumberText");
+      const binaryNumberText = elementId("binaryNumberText");
+      const decimalValueText = elementId("decimalValueText");
+      const durationValue = elementId("durationValue");
       const binaryNumber = elementId("binaryNumber");
       const decimalValue = elementId("decimalValue");
       const convertBtn = elementId("convertBtn");
-      const durationValue = elementId("durationValue");
       const binaryForm = elementId("binaryForm");
+      const headerText = elementId("headerText");
       const resetBtn = elementId("resetBtn");
       const moon = elementId("moon");
+      const main = elementId("main");
 
-      convertBtn.onclick = (e) => {
-        e.preventDefault();
 
-        binaryToDecimal(binaryNumber.value)
-          ? (decimalValue.textContent = binaryToDecimal(binaryNumber.value))
-          : notBinary(binaryNumber.value);
-      };
-
-      resetBtn.onclick = (e) => {
-        e.preventDefault();
-        decimalValue.textContent = "";
-        binaryNumber.value = "";
-      };
-
-      moon.onclick = e => {
-        document.body.classList.toggle("body-mode");
-      }
-
-      const notBinary = (error) => {
+      const notBinary = () => {
         binaryNumber.classList.add("uk-animation-shake");
         binaryNumber.classList.add("binary-input-error");
-        // UIkit.notification({message: 'Invalid binary!',pos: 'top-center', status: 'danger'})
         // decimalValue.textContent = "";
         // binaryNumber.value = "";
 
@@ -122,9 +111,29 @@
         }, 1000);
       };
 
-      console.timeEnd("Check");
 
-      // console.log(import.meta);
+      convertBtn.onclick = (e) => {
+        e.preventDefault();
+
+        binaryToDecimal(binaryNumber.value)
+          ? (decimalValue.textContent = binaryToDecimal(binaryNumber.value))
+          : notBinary();
+      };
+
+      resetBtn.onclick = (e) => {
+        e.preventDefault();
+        decimalValue.textContent = "";
+        binaryNumber.value = "";
+      };
+
+      moon.onclick = () => {
+        enteredNumberText.classList.toggle("text-mode");
+        headerText.classList.toggle("text-mode");
+        binaryNumberText.classList.toggle("text-mode");
+        decimalValueText.classList.toggle("text-mode");
+        document.body.classList.toggle("body-mode");
+        main.classList.toggle("main-mode");
+      };
 
       binaryNumber.oninput = () => {
         durationValue.textContent = binaryNumber.value;
