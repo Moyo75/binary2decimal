@@ -8,7 +8,7 @@ A simple coverter app that transforms binary to decimal.
 
 It has three input, the first of which accepts the binary and the second displays the result while the third just repeats the entered value. Followed by badges with the tools and tech stack behind the simple converter, with a simple error animation when a non-binary value is entered.
 
-(https://vanilla-interactive-pricing-component-git-master-moyo75.vercel.app/)
+(https://moyo75.github.io/binary2decimal/index.html)
 
 ## Motivation
 
